@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -15,8 +15,10 @@
         body {
             color: #fff;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
+        /* --- 背景图样式 --- */
         .background-container {
             position: fixed;
             top: 0;
@@ -42,45 +44,73 @@
         .background-section.active {
             opacity: 1;
         }
-        
+
+        /* --- 主内容区域 --- */
         .content {
             position: relative;
             width: 100%;
-            min-height: 520vh;
-            padding-bottom: 20vh;
+            /* 不再固定高度，由内容撑开，但给底部留白 */
+            padding-bottom: 20vh; 
             z-index: 10; 
             padding: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 100%);
         }
-        
+
+        /* 顶部标题区 */
         header {
             text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
             width: 100%;
+            max-width: 1200px;
         }
         
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            color: #fff;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
         }
         
         .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.8;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-        
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
+
+        /* --- 分区容器 --- */
+        .section-wrapper {
             width: 100%;
             max-width: 1200px;
+            margin-bottom: 2rem;
+            /* 确保每个区域至少占据屏幕的大部分，方便切换背景 */
+            min-height: 80vh; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 5px solid #0099ff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.3);
+            display: inline-block;
+            border-radius: 0 8px 8px 0;
+            padding-right: 1rem;
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- 网格布局 (用于核心工具 & 常用网站) --- */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+            width: 100%;
         }
         
         .nav-item {
@@ -90,16 +120,23 @@
             padding: 1.5rem;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 120px;
         }
         
         .nav-item:hover {
             transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 153, 255, 0.5);
         }
         
         .site-name {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
             color: #fff;
         }
@@ -107,46 +144,53 @@
         .site-url {
             color: #a0a0a0;
             font-family: monospace;
-            font-size: 0.9rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 4px;
-            display: inline-block;
-        }
-        
-        .site-url:hover {
-            color: #fff;
-        }
-        
-        .site-table {
-            width: 100%;
-            max-width: 1200px;
-            border-collapse: collapse;
-            margin-top: calc(100vh - 100px);
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .site-table.visible {
-            opacity: 1;
+        /* --- 表格布局 (用于次要网站) --- */
+        .site-table-container {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        
+
+        .site-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
         .site-table th, .site-table td {
-            padding: 1rem;
+            padding: 1.2rem;
             text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.2s;
+        }
+
+        .site-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .site-table th {
+            background: rgba(0, 153, 255, 0.2);
+            font-size: 1.2rem;
             color: #fff;
         }
-        
-        .site-table th {
-            font-size: 1.4rem;
-            font-weight: bold;
+
+        .site-table tr {
+            cursor: pointer;
         }
-        
-        .site-table td {
-            font-size: 1.2rem;
+
+        .site-table tr:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
-        
+
+        /* --- 密码弹窗 (保持不变) --- */
         .password-modal {
             position: fixed;
             top: 0;
@@ -154,7 +198,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
-            display: flex;
+            display: none; /* JS控制显示 */
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -162,12 +206,13 @@
         
         .password-form {
             background: rgba(30, 30, 30, 0.95);
-            padding: 2rem;
-            border-radius: 12px;
+            padding: 2.5rem;
+            border-radius: 16px;
             text-align: center;
             width: 90%;
             max-width: 400px;
             box-shadow: 0 0 30px rgba(0, 150, 255, 0.3);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .password-form h2 {
@@ -179,62 +224,66 @@
             width: 100%;
             padding: 1rem;
             margin-bottom: 1.5rem;
-            border: none;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
             color: #fff;
             font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .password-input:focus {
+            border-color: #0099ff;
         }
         
         .submit-btn {
-            padding: 0.8rem 2rem;
+            width: 100%;
+            padding: 0.8rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             background: linear-gradient(45deg, #0066cc, #0099ff);
             color: white;
             font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .submit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(0, 150, 255, 0.5);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
         }
         
         .error-message {
             color: #ff5555;
             margin-top: 1rem;
+            font-size: 0.9rem;
             display: none;
         }
-        
+
+        /* --- 页脚 --- */
         footer {
-            margin-top: 3rem;
+            margin-top: auto;
             text-align: center;
             padding: 2rem;
             width: 100%;
-            opacity: 0.7;
-            font-size: 0.9rem;
+            opacity: 0.6;
+            font-size: 0.85rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 12px;
         }
-        
+
+        /* --- 响应式 --- */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .nav-grid {
-                grid-template-columns: 1fr;
-                gap: 0.8rem;
-            }
-            
-            .site-table th, .site-table td {
-                padding: 0.8rem;
-                font-size: 1rem;
-            }
+            h1 { font-size: 2rem; }
+            .nav-grid { grid-template-columns: 1fr; }
+            .section-wrapper { min-height: auto; padding: 2rem 0; }
         }
     </style>
 </head>
 <body>
+    <!-- 密码弹窗 -->
     <div class="password-modal" id="passwordModal">
         <div class="password-form">
             <h2>需要验证身份</h2>
@@ -245,220 +294,250 @@
         </div>
     </div>
 
+    <!-- 背景图容器 -->
     <div class="background-container">
+        <!-- 图片1: 对应 常用网站 -->
         <div class="background-section" style="background-image: url('https://b.dlozs.top/66342352_p0_master1200_waifu2x_art_noise1_scale.png');"></div>
+        <!-- 图片2: 对应 次要网站 -->
         <div class="background-section" style="background-image: url('https://b.dlozs.top/74503980_p0_master1200_waifu2x_art_noise1_scale.png');"></div>
+        <!-- 图片3: 对应 其他/底部 -->
         <div class="background-section" style="background-image: url('https://b.dlozs.top/QQ%E5%9B%BE%E7%89%8720250608224004.jpg');"></div>
+        <!-- 图片4 -->
         <div class="background-section" style="background-image: url('https://b.dlozs.top/GqkxktCWUAAfDMO%20(1).jpg');"></div>
+        <!-- 图片5 -->
         <div class="background-section" style="background-image: url('https://b.dlozs.top/FcX3eEQaUAEFdjh%20(1).jpg');"></div>
     </div>
 
+    <!-- 主内容区 -->
     <div class="content" id="mainContent">
         <header>
-            <h1>近衛憐的主页面</h1>
-            <p class="subtitle">个人导航与资源中心</p>
+            <h1 id="pageTitle">近衛憐的主页面</h1>
+            <p class="subtitle" id="currentTime">加载时间中...</p>
         </header>
         
-        <div class="nav-grid">
-            <div class="nav-item">
-                <h3 class="site-name">梦之碎片工具箱</h3>
-                <p class="site-url">https://tools.dlozs.top/</p>
+        <!-- 区域1: 核心工具 -->
+        <!-- 注意：这里默认显示在第一张图上方，或者你可以把它作为第一屏的一部分 -->
+        <div class="section-wrapper" id="tool-section">
+            <div class="section-title">核心工具箱</div>
+            <div class="nav-grid" id="tool-grid">
+                <!-- JS自动填充 -->
             </div>
-            <div class="nav-item">
-                <h3 class="site-name">多功能工具箱</h3>
-                <p class="site-url">https://r2.dlozs.top/</p>
-            </div>
-            <div class="nav-item">
-                <h3 class="site-name">自建wiki</h3>
-                <p class="site-url">https://r1.dlozs.top/</p>
-            </div>
-            <div class="nav-item">
-                <h3 class="site-name">图片网站</h3>
-                <p class="site-url">https://pict.dlozs.top</p>
+        </div>
+
+        <!-- 区域2: 常用网站 -->
+        <div class="section-wrapper" id="common-section">
+            <div class="section-title">常用网站</div>
+            <div class="nav-grid" id="common-grid">
+                <!-- JS自动填充 -->
             </div>
         </div>
         
-        <table class="site-table" id="siteTable">
-            <tr>
-                <th>网站名</th>
-                <th>网站域名</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td><span class="site-url"></span></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><span class="site-url"></span></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><span class="site-url"></span></td>
-            </tr>
-        </table>
+        <!-- 区域3: 次要网站 -->
+        <div class="section-wrapper" id="secondary-section">
+            <div class="section-title">次要资源</div>
+            <div class="site-table-container">
+                <table class="site-table">
+                    <thead>
+                        <tr>
+                            <th>网站名称</th>
+                            <th>直达链接</th>
+                        </tr>
+                    </thead>
+                    <tbody id="secondary-table-body">
+                        <!-- JS自动填充 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
         
         <footer>
-            <p>© 2025 近衛憐的个人主页 • 当前时间: <span id="lastModifiedTime"></span></p>
+            <p>© 2025 近衛憐的个人主页 • 数据由 data.csv 驱动</p>
         </footer>
     </div>
 
     <script>
         const CONFIG = {
             PASSWORD: '907521',
-            PAGE_TITLE: '近衛憐的主页面'
+            PAGE_TITLE: '近衛憐的主页面',
+            DATA_FILE: 'data.csv' // 数据文件路径
         };
 
-        const passwordModal = document.getElementById('passwordModal');
-        const passwordInput = document.getElementById('passwordInput');
-        const submitPassword = document.getElementById('submitPassword');
-        const errorMessage = document.getElementById('errorMessage');
-        const mainContent = document.getElementById('mainContent');
-        const pageTitle = document.querySelector('h1');
-        const documentTitle = document.querySelector('title');
-        const backgroundSections = document.querySelectorAll('.background-section');
-        const lastModifiedTime = document.getElementById('lastModifiedTime');
-        const siteTable = document.getElementById('siteTable');
+        // DOM 元素引用
+        const els = {
+            passwordModal: document.getElementById('passwordModal'),
+            passwordInput: document.getElementById('passwordInput'),
+            submitBtn: document.getElementById('submitPassword'),
+            errorMsg: document.getElementById('errorMessage'),
+            mainContent: document.getElementById('mainContent'),
+            pageTitle: document.getElementById('pageTitle'),
+            documentTitle: document.querySelector('title'),
+            bgSections: document.querySelectorAll('.background-section'),
+            toolGrid: document.getElementById('tool-grid'),
+            commonGrid: document.getElementById('common-grid'),
+            secondaryTableBody: document.getElementById('secondary-table-body'),
+            currentTime: document.getElementById('currentTime')
+        };
 
-        pageTitle.textContent = CONFIG.PAGE_TITLE;
-        documentTitle.textContent = CONFIG.PAGE_TITLE;
+        // --- 核心逻辑 ---
 
+        // 1. 初始化
+        function init() {
+            els.pageTitle.textContent = CONFIG.PAGE_TITLE;
+            els.documentTitle.textContent = CONFIG.PAGE_TITLE;
+
+            // 检查密码
+            if (!checkAuth()) {
+                els.passwordModal.style.display = 'flex';
+                els.mainContent.style.opacity = '0';
+                els.mainContent.style.pointerEvents = 'none';
+            } else {
+                showContent();
+            }
+
+            // 绑定密码事件
+            els.submitBtn.addEventListener('click', verifyPassword);
+            els.passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') verifyPassword();
+            });
+
+            // 监听滚动（背景切换）
+            window.addEventListener('scroll', updateBackground);
+
+            // 启动时间更新
+            updateTime();
+            setInterval(updateTime, 1000);
+        }
+
+        // 2. 验证与 Cookie
+        function verifyPassword() {
+            if (els.passwordInput.value === CONFIG.PASSWORD) {
+                setAuthCookie();
+                showContent();
+            } else {
+                els.errorMsg.style.display = 'block';
+                els.passwordInput.value = '';
+                setTimeout(() => els.errorMsg.style.display = 'none', 3000);
+            }
+        }
+
+        function checkAuth() {
+            return document.cookie.includes(`siteAuth=${btoa(CONFIG.PASSWORD)}`);
+        }
+
+        function setAuthCookie() {
+            document.cookie = `siteAuth=${btoa(CONFIG.PASSWORD)}; max-age=3600; path=/`;
+        }
+
+        // 3. 显示内容并加载数据
+        function showContent() {
+            els.passwordModal.style.display = 'none';
+            els.mainContent.style.opacity = '1';
+            els.mainContent.style.pointerEvents = 'auto';
+            loadData();
+        }
+
+        // 4. 加载 CSV 数据
+        async function loadData() {
+            try {
+                const response = await fetch(CONFIG.DATA_FILE);
+                if (!response.ok) throw new Error("CSV文件未找到");
+                const text = await response.text();
+                parseAndRender(text);
+            } catch (error) {
+                console.error(error);
+                alert("未找到 data.csv 文件，请确保文件在同一目录下。");
+            }
+        }
+
+        // 5. 解析 CSV 并渲染
+        function parseAndRender(csvText) {
+            const lines = csvText.split('\n');
+            // 跳过表头 (索引0)
+            
+            lines.forEach((line, index) => {
+                if (index === 0) return; // 跳过标题行
+                const trimmedLine = line.trim();
+                if (!trimmedLine) return; // 跳过空行
+
+                // 简单的逗号分割（如果网址里没有逗号，这就够用了）
+                // 格式：分类,网站名,网址
+                const parts = trimmedLine.split(',');
+                if (parts.length < 3) return;
+
+                const [category, name, url] = parts.map(p => p.trim());
+
+                // 渲染逻辑
+                if (category === 'tool') {
+                    els.toolGrid.appendChild(createCard(name, url));
+                } else if (category === 'common') {
+                    els.commonGrid.appendChild(createCard(name, url));
+                } else if (category === 'secondary') {
+                    els.secondaryTableBody.appendChild(createRow(name, url));
+                }
+            });
+        }
+
+        // 创建卡片元素 (用于 Tool 和 Common)
+        function createCard(name, url) {
+            const div = document.createElement('div');
+            div.className = 'nav-item';
+            div.onclick = () => window.open(url, '_blank');
+            div.innerHTML = `
+                <div class="site-name">${name}</div>
+                <div class="site-url">${url}</div>
+            `;
+            return div;
+        }
+
+        // 创建表格行 (用于 Secondary)
+        function createRow(name, url) {
+            const tr = document.createElement('tr');
+            tr.onclick = () => window.open(url, '_blank');
+            tr.innerHTML = `
+                <td>${name}</td>
+                <td><span class="site-url" style="color:#a0a0a0">${url}</span></td>
+            `;
+            return tr;
+        }
+
+        // 6. 背景图切换逻辑
         function updateBackground() {
-            const scrollPosition = window.scrollY;
+            const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
-            const totalSections = backgroundSections.length;
-            const sectionHeight = windowHeight;
+            
+            // 计算当前应该在第几张图
+            // 逻辑：0-100vh -> index 0, 100vh-200vh -> index 1...
             const currentIndex = Math.min(
-                Math.floor(scrollPosition / sectionHeight),
-                totalSections - 1
+                Math.floor(scrollY / windowHeight),
+                els.bgSections.length - 1
             );
 
-            backgroundSections.forEach((section, index) => {
-                section.classList.toggle('active', index === currentIndex);
-            });
-
-            // 控制表格在第二张图片时显示
-            siteTable.classList.toggle('visible', scrollPosition >= windowHeight);
-        }
-
-        const imageUrls = [
-            'https://b.dlozs.top/66342352_p0_master1200_waifu2x_art_noise1_scale.png',
-            'https://b.dlozs.top/74503980_p0_master1200_waifu2x_art_noise1_scale.png',
-            'https://b.dlozs.top/QQ%E5%9B%BE%E7%89%8720250608224004.jpg',
-            'https://b.dlozs.top/GqkxktCWUAAfDMO%20(1).jpg',
-            'https://b.dlozs.top/FcX3eEQaUAEFdjh%20(1).jpg'
-        ];
-
-        imageUrls.forEach(url => {
-            const img = new Image();
-            img.src = url;
-            img.onerror = () => console.error(`Failed to preload image: ${url}`);
-        });
-
-        function updateLastModifiedTime() {
-            const now = new Date();
-            const beijingTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
-            const year = beijingTime.getFullYear();
-            const month = String(beijingTime.getMonth() + 1).padStart(2, '0');
-            const day = String(beijingTime.getDate()).padStart(2, '0');
-            const hours = String(beijingTime.getHours()).padStart(2, '0');
-            const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
-            lastModifiedTime.textContent = `${year}-${month}-${day} ${hours}:${minutes}`;
-        }
-
-        backgroundSections[0].classList.add('active');
-
-        window.addEventListener('scroll', updateBackground);
-
-        function checkPassword() {
-            if (passwordInput.value === CONFIG.PASSWORD) {
-                passwordModal.style.display = 'none';
-                mainContent.style.display = 'flex';
-                document.cookie = `siteAuth=${btoa(CONFIG.PASSWORD)}; max-age=3600`;
-            } else {
-                errorMessage.style.display = 'block';
-                passwordInput.value = '';
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000);
-            }
-        }
-
-        function checkAuthCookie() {
-            const cookies = document.cookie.split(';');
-            for (let cookie of cookies) {
-                const [name, value] = cookie.trim().split('=');
-                if (name === 'siteAuth' && atob(value) === CONFIG.PASSWORD) {
-                    passwordModal.style.display = 'none';
-                    mainContent.style.display = 'flex';
-                    return true;
+            els.bgSections.forEach((sec, idx) => {
+                if (idx === currentIndex) {
+                    sec.classList.add('active');
+                } else {
+                    sec.classList.remove('active');
                 }
-            }
-            return false;
+            });
         }
 
-        function init() {
-            if (!checkAuthCookie()) {
-                passwordModal.style.display = 'flex';
-                mainContent.style.display = 'none';
-            }
-
-            submitPassword.addEventListener('click', checkPassword);
-            passwordInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') checkPassword();
+        // 7. 时间更新
+        function updateTime() {
+            const now = new Date();
+            // 使用用户本地时间或上海时间皆可
+            els.currentTime.textContent = now.toLocaleString('zh-CN', { 
+                hour12: false, 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
             });
-
-            // 子域名数据（顶部方块）
-            const subdomains = [
-                { name: '梦之碎片工具箱', url: 'https://tools.dlozs.top/' },
-                { name: '多功能工具箱', url: 'https://r2.dlozs.top/' },
-                { name: '自建wiki', url: 'https://r1.dlozs.top/' },
-                { name: '图片网站', url: 'https://pict.dlozs.top' }
-            ];
-
-            // 常用网站数据（表格，供后续填充）
-            const sites = [
-                { name: '文章查重', url: 'https://www.diffchecker.com/' },
-                { name: '', url: '' },
-                { name: '', url: '' }
-            ];
-
-            // 动态填充子域名（方块）
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach((item, index) => {
-                const nameEl = item.querySelector('.site-name');
-                const urlEl = item.querySelector('.site-url');
-                nameEl.textContent = subdomains[index].name;
-                urlEl.textContent = subdomains[index].url || '待填充';
-                urlEl.addEventListener('click', () => {
-                    if (subdomains[index].url) {
-                        window.open(subdomains[index].url, '_blank');
-                    }
-                });
-            });
-
-            // 动态填充常用网站（表格）
-            const tableRows = document.querySelectorAll('.site-table tr:not(:first-child)');
-            tableRows.forEach((row, index) => {
-                const nameCell = row.cells[0];
-                const urlCell = row.cells[1].querySelector('.site-url');
-                nameCell.textContent = sites[index].name || '待填充';
-                urlCell.textContent = sites[index].url || '待填充';
-                urlCell.addEventListener('click', () => {
-                    if (sites[index].url) {
-                        window.open(sites[index].url, '_blank');
-                    }
-                });
-            });
-
-            updateLastModifiedTime();
-            setInterval(updateLastModifiedTime, 60000);
         }
 
+        // 启动
         window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
-
-
-
-
