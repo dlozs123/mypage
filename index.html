@@ -1,352 +1,133 @@
-<!DOCTYPE html> 
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>近衛憐のホームページ</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            color: #fff;
-            scroll-behavior: smooth;
-        }
-
-        .background-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -1;
-        }
-
-        .background-section {
-            height: 100vh;
-            width: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-
-        .background-section.active {
-            opacity: 1;
-        }
-        
-        .content {
-            position: relative;
-            width: 100%;
-            min-height: 520vh;
-            padding-bottom: 20vh;
-            z-index: 10; 
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.2);
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            width: 100%;
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            color: #fff;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.8;
-        }
-        
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
-            width: 100%;
-            max-width: 1200px;
-        }
-        
-        .nav-item {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .nav-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .site-name {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-        
-        .site-url {
-            color: #a0a0a0;
-            font-family: monospace;
-            font-size: 0.9rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 4px;
-            display: inline-block;
-        }
-        
-        .site-url:hover {
-            color: #fff;
-        }
-        
-        .site-table {
-            width: 100%;
-            max-width: 1200px;
-            border-collapse: collapse;
-            margin-top: calc(100vh - 100px);
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .site-table.visible {
-            opacity: 1;
-        }
-        
-        .site-table th, .site-table td {
-            padding: 1rem;
-            text-align: left;
-            color: #fff;
-        }
-        
-        .site-table th {
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
-        
-        .site-table td {
-            font-size: 1.2rem;
-        }
-        
-        footer {
-            margin-top: 3rem;
-            text-align: center;
-            padding: 2rem;
-            width: 100%;
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #fff;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .nav-grid {
-                grid-template-columns: 1fr;
-                gap: 0.8rem;
-            }
-            
-            .site-table th, .site-table td {
-                padding: 0.8rem;
-                font-size: 1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>近衛憐のホームページ</title>
+  <meta name="description" content="近衛憐の個人ホームページ - ナビゲーション・メモ・ブックマーク">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="background-container">
-        <div class="background-section" style="background-image: url('https://b.dlozs.top/flan1.png');"></div>
-        <div class="background-section" style="background-image: url('https://b.dlozs.top/flan2.png');"></div>
-        <div class="background-section" style="background-image: url('https://b.dlozs.top/remiflan1.jpg');"></div>
-        <div class="background-section" style="background-image: url('https://b.dlozs.top/remiflan2.jpg');"></div>
-        <div class="background-section" style="background-image: url('https://b.dlozs.top/remiflan3.jpg');"></div>
-    </div>
 
-    <div class="content" id="mainContent">
-        <header>
-            <h1>近衛憐のホームページ</h1>
-            <p class="subtitle">个人导航与资源中心</p>
-        </header>
-        
+  <!-- Paging Navigation -->
+  <div class="nav-trigger-area" id="navTriggerArea"></div>
+  <div class="nav-arrows" id="navArrows">
+    <button class="arrow-btn" id="prevBtn" title="前のページ" aria-label="Previous Page">&#10094;</button>
+    <button class="arrow-btn" id="nextBtn" title="次のページ" aria-label="Next Page">&#10095;</button>
+  </div>
+
+  <!-- BGM Button -->
+  <button class="bgm-btn" id="bgmBtn" title="次のBGMに切り替え">
+    <div class="music-bars">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </button>
+  <audio id="bgmAudio" muted autoplay preload="auto"></audio>
+
+  <!-- Section 1: Navigation -->
+  <section class="bg-section" id="section1">
+    <div class="section-content">
+      <div class="page-title fade-in">
+        <h1>近衛憐のホームページ</h1>
+        <div class="subtitle">Personal Navigation &amp; Resource Center</div>
+      </div>
+      <div class="glass-card fade-in">
+        <div class="section-label"><span class="icon">🧭</span> 个人导航与资源中心</div>
         <div class="nav-grid" id="navGrid">
-            <div class="loading">加载中...</div>
+          <!-- Populated by JS from nav.csv -->
         </div>
-        
-        <table class="site-table" id="siteTable">
-            <tr>
-                <th>网站名</th>
-                <th>网站域名</th>
-            </tr>
-        </table>
-        
-        <footer>
-            <p>© 2025 近衛憐のホームページ • 当前时间: <span id="lastModifiedTime"></span></p>
-        </footer>
+      </div>
     </div>
+  </section>
 
-    <script>
-        const backgroundSections = document.querySelectorAll('.background-section');
-        const lastModifiedTime = document.getElementById('lastModifiedTime');
-        const siteTable = document.getElementById('siteTable');
-        const navGrid = document.getElementById('navGrid');
+  <!-- Section 2: Bookmarks -->
+  <section class="bg-section" id="section2">
+    <div class="section-content">
+      <div class="glass-card fade-in">
+        <div class="section-label"><span class="icon">🔗</span> 我的常用网站</div>
+        <div class="sites-container" id="sitesContainer">
+          <!-- Populated by JS from sites.csv -->
+        </div>
+      </div>
+    </div>
+  </section>
 
-        function updateBackground() {
-            const scrollPosition = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const totalSections = backgroundSections.length;
-            const sectionHeight = windowHeight;
-            const currentIndex = Math.min(
-                Math.floor(scrollPosition / sectionHeight),
-                totalSections - 1
-            );
+  <!-- Section 3: Calendar & Memo -->
+  <section class="bg-section" id="section3">
+    <div class="section-content">
+      <div class="glass-card fade-in">
+        <div class="section-label"><span class="icon">📅</span> 备忘录</div>
+        <div class="calendar-wrapper" id="calendarWrapper">
+          <div class="calendar-header">
+            <div class="cal-buttons">
+              <button class="cal-btn" id="prevYear" title="上一年">«</button>
+              <button class="cal-btn" id="prevMonth" title="上一月">‹</button>
+            </div>
+            <span class="month-year" id="monthYear"></span>
+            <div class="cal-buttons">
+              <button class="cal-btn" id="nextMonth" title="下一月">›</button>
+              <button class="cal-btn" id="nextYear" title="下一年">»</button>
+              <button class="cal-btn today-btn" id="todayBtn">今天</button>
+            </div>
+          </div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
 
-            backgroundSections.forEach((section, index) => {
-                section.classList.toggle('active', index === currentIndex);
-            });
+        <!-- Memo Panel -->
+        <div class="memo-panel">
+          <div class="memo-type-buttons">
+            <button class="memo-type-btn" data-type="birthday_solar">🎂 生日（阳历）</button>
+            <button class="memo-type-btn" data-type="birthday_lunar">🌙 生日（阴历）</button>
+            <button class="memo-type-btn" data-type="monthly">🔁 每月事项</button>
+            <button class="memo-type-btn" data-type="once">📌 单次事项</button>
+          </div>
 
-            siteTable.classList.toggle('visible', scrollPosition >= windowHeight);
-        }
+          <div class="memo-form" id="memoForm">
+            <div class="form-row">
+              <input type="text" id="memoTitle" placeholder="事项名称">
+            </div>
+            <div class="form-row" id="memoDateRow">
+              <select id="memoMonth"></select>
+              <select id="memoDay"></select>
+              <select id="memoYear" style="display:none"></select>
+            </div>
+            <button class="memo-submit-btn" id="memoSubmit">添加备忘</button>
+          </div>
 
-        const imageUrls = [
-            'https://b.dlozs.top/66342352_p0_master1200_waifu2x_art_noise1_scale.png',
-            'https://b.dlozs.top/74503980_p0_master1200_waifu2x_art_noise1_scale.png',
-            'https://b.dlozs.top/QQ%E5%9B%BE%E7%89%8720250608224004.jpg',
-            'https://b.dlozs.top/GqkxktCWUAAfDMO%20(1).jpg',
-            'https://b.dlozs.top/FcX3eEQaUAEFdjh%20(1).jpg'
-        ];
+          <!-- Selected day memos -->
+          <div class="day-memos" id="dayMemos"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        imageUrls.forEach(url => {
-            const img = new Image();
-            img.src = url;
-            img.onerror = () => console.error(`Failed to preload image: ${url}`);
-        });
+  <!-- Section 4: Placeholder -->
+  <section class="bg-section" id="section4">
+    <div class="section-content placeholder-section">
+      <span class="placeholder-text">✦ 第四区域 — 待设计 ✦</span>
+    </div>
+  </section>
 
-        function updateLastModifiedTime() {
-            const now = new Date();
-            const beijingTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
-            const year = beijingTime.getFullYear();
-            const month = String(beijingTime.getMonth() + 1).padStart(2, '0');
-            const day = String(beijingTime.getDate()).padStart(2, '0');
-            const hours = String(beijingTime.getHours()).padStart(2, '0');
-            const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
-            lastModifiedTime.textContent = `${year}-${month}-${day} ${hours}:${minutes}`;
-        }
+  <!-- Section 5: Placeholder -->
+  <section class="bg-section" id="section5">
+    <div class="section-content placeholder-section">
+      <span class="placeholder-text">✦ 第五区域 — 待设计 ✦</span>
+    </div>
+  </section>
 
-        function parseCSV(text) {
-            const lines = text.trim().split('\n');
-            const headers = lines[0].split(',').map(h => h.trim());
-            const data = [];
-            
-            for (let i = 1; i < lines.length; i++) {
-                if (lines[i].trim()) {
-                    const values = lines[i].split(',').map(v => v.trim());
-                    const row = {};
-                    headers.forEach((header, index) => {
-                        row[header] = values[index] || '';
-                    });
-                    data.push(row);
-                }
-            }
-            
-            return data;
-        }
+  <!-- Reminder Modal -->
+  <div class="modal-overlay" id="reminderModal">
+    <div class="modal-box">
+      <h2>📢 近期提醒</h2>
+      <div id="reminderList"></div>
+      <button class="modal-close-btn" id="modalCloseBtn">我知道了</button>
+    </div>
+  </div>
 
-        async function loadSubdomains() {
-            try {
-                const response = await fetch('subdomains.csv');
-                const text = await response.text();
-                const data = parseCSV(text);
-                
-                navGrid.innerHTML = '';
-                
-                data.forEach(item => {
-                    const navItem = document.createElement('div');
-                    navItem.className = 'nav-item';
-                    navItem.innerHTML = `
-                        <h3 class="site-name">${item.name}</h3>
-                        <p class="site-url">${item.url}</p>
-                    `;
-                    
-                    const urlEl = navItem.querySelector('.site-url');
-                    urlEl.addEventListener('click', () => {
-                        if (item.url) {
-                            window.open(item.url, '_blank');
-                        }
-                    });
-                    
-                    navGrid.appendChild(navItem);
-                });
-            } catch (error) {
-                console.error('加载子域名数据失败:', error);
-                navGrid.innerHTML = '<div class="loading">加载失败，请检查 subdomains.csv 文件</div>';
-            }
-        }
-
-        async function loadCommonSites() {
-            try {
-                const response = await fetch('sites.csv');
-                const text = await response.text();
-                const data = parseCSV(text);
-                
-                data.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${item.name}</td>
-                        <td><span class="site-url">${item.url}</span></td>
-                    `;
-                    
-                    const urlEl = row.querySelector('.site-url');
-                    urlEl.addEventListener('click', () => {
-                        if (item.url) {
-                            window.open(item.url, '_blank');
-                        }
-                    });
-                    
-                    siteTable.appendChild(row);
-                });
-            } catch (error) {
-                console.error('加载常用网站数据失败:', error);
-            }
-        }
-
-        async function init() {
-            backgroundSections[0].classList.add('active');
-            window.addEventListener('scroll', updateBackground);
-            
-            await loadSubdomains();
-            await loadCommonSites();
-            
-            updateLastModifiedTime();
-            setInterval(updateLastModifiedTime, 60000);
-        }
-
-        window.addEventListener('DOMContentLoaded', init);
-    </script>
+  <!-- External Libs -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
